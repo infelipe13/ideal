@@ -1,0 +1,15 @@
+datasource db {
+  provider = "mysql"
+  url      = "mysql://bd7573ed9dbda6:3a35b075@us-cdbr-east-06.cleardb.net/heroku_a21be509b38a4a4?reconnect=true"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Business {
+  id           Int     @default(autoincrement()) @id
+  email        String  @unique
+  exchangeRate Int     @default(5)
+  name         String?
+}

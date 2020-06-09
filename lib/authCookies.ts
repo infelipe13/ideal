@@ -1,0 +1,45 @@
+import { parse, serialize } from 'cookie';
+import { NextApiRequest, NextApiResponse } from 'next';
+
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
+const MAX_AGE = 8 * 60 * 60; // 8h.
+const TOKEN_NAME = 'token';
+
+export const parseCookie = (req: NextApiRequest) => {
+  // No need to parse when route is API.
+  if (req.cookies) {
+    return req.cookies;
+  }
+
+  const { cookie = '' } = req.headers;
+
+  return parse(cookie);
+};
+
+export const getTokenCookie = (req: NextApiRequest) => {
+  const cookie = parseCookie(req);
+
+  return cookie[TOKEN_NAME];
+};
+
+export const removeTokenCookie = (res: NextApiResponse) => {
+  const cookie = serialize(TOKEN_NAME, '', {
+    maxAge: -1,
+    path: '/',
+  });
+
+  res.setHeader('Set-Cookie', cookie);
+};
+
+export const setTokenCookie = (res: NextApiResponse, token: string) => {
+  const cookie = serialize(TOKEN_NAME, token, {
+    expires: new Date(Date.now() + MAX_AGE * 1000),
+    httpOnly: true,
+    maxAge: MAX_AGE,
+    path: '/',
+    sameSite: 'lax',
+    secure: IS_PRODUCTION,
+  });
+
+  res.setHeader('Set-Cookie', cookie);
+};
