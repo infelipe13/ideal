@@ -6,3 +6,4 @@ export { Icon } from 'src/components/Icon';
 export { Input } from 'src/components/Input';
 export { Layout } from 'src/components/Layout';
 export { Panel } from 'src/components/Panel';
+export { Transition } from 'src/components/Transition';
