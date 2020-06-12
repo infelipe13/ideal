@@ -1,3 +1,4 @@
+// Copy "path" from https://heroicons.dev
 const icons = {
   exclamationCircle: 'M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
   menu: 'M4 6h16M4 12h16M4 18h16',
