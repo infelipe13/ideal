@@ -1,4 +1,6 @@
-module.exports = {
+const withPrefresh = require('@prefresh/next');
+
+const config = {
   env: {
     MAGIC_PUBLISHABLE_KEY: process.env.MAGIC_PUBLISHABLE_KEY,
     MAGIC_SECRET_KEY: process.env.MAGIC_SECRET_KEY,
@@ -43,3 +45,5 @@ module.exports = {
     return config;
   },
 };
+
+module.exports = withPrefresh(config);
