@@ -1,4 +1,5 @@
 import Iron from '@hapi/iron';
+import { IncomingMessage } from 'http';
 import { MagicUserMetadata } from 'magic-sdk';
 import { NextApiRequest } from 'next';
 
@@ -11,9 +12,9 @@ export const encryptSession = (session: MagicUserMetadata) => {
 };
 
 export const getSession = async (
-  request: NextApiRequest
+  req: IncomingMessage | NextApiRequest
 ): Promise<MagicUserMetadata> => {
-  const tokenCookie = getTokenCookie(request);
+  const tokenCookie = getTokenCookie(req);
 
   return tokenCookie && Iron.unseal(tokenCookie, TOKEN_SECRET, Iron.defaults);
 };

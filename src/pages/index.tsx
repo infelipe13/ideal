@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 import { Button, Input, Layout, Panel } from 'src/components';
 
-export default ({ business }: { business: Business }) => {
+const Page = ({ business }: { business: Business }) => {
   const [email, setEmail] = useState('');
   const { id, exchangeRate, name } = business;
 
@@ -71,3 +71,5 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 
   return { props: { business } };
 };
+
+export default Page;

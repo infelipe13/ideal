@@ -1,14 +1,15 @@
 import { parse, serialize } from 'cookie';
+import { IncomingMessage } from 'http';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 const MAX_AGE = 8 * 60 * 60; // 8h.
 const TOKEN_NAME = 'token';
 
-export const parseCookie = (req: NextApiRequest) => {
+export const parseCookie = (req: IncomingMessage | NextApiRequest) => {
   // No need to parse when route is API.
-  if (req.cookies) {
-    return req.cookies;
+  if ((req as NextApiRequest).cookies) {
+    return (req as NextApiRequest).cookies;
   }
 
   const { cookie = '' } = req.headers;
@@ -16,7 +17,7 @@ export const parseCookie = (req: NextApiRequest) => {
   return parse(cookie);
 };
 
-export const getTokenCookie = (req: NextApiRequest) => {
+export const getTokenCookie = (req: IncomingMessage | NextApiRequest) => {
   const cookie = parseCookie(req);
 
   return cookie[TOKEN_NAME];
