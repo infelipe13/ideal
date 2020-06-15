@@ -27,6 +27,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.status(200).send({ business });
   } catch ({ message }) {
-    res.status(500).end({ message });
+    res.status(500).send({ message });
   }
 };

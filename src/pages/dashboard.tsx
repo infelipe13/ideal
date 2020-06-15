@@ -1,25 +1,32 @@
-import { MagicUserMetadata } from 'magic-sdk';
-import { GetServerSidePropsContext } from 'next';
+import { GetServerSideProps } from 'next';
 
 import { withProtection } from 'src/hofs/withProtection';
+import { Button, Input, Layout, Panel } from 'src/components';
 
-type Props = {
-  name: string;
-  session: MagicUserMetadata;
+const Page = () => {
+  return (
+    <Layout heading="Dashboard">
+      <Panel>
+        <form
+          className="mx-auto space-y-8 sm:max-w-md"
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <Input
+            hint="Obrigatório"
+            label="Número de telefone celular"
+            placeholder="(00) 9 1234-1234"
+          />
+          <Button expand onClick={async () => {}}>
+            Pontuar
+          </Button>
+        </form>
+      </Panel>
+    </Layout>
+  );
 };
 
-const Page = (props: Props) => {
-  console.log(props);
-
-  return <h1>Dashboard</h1>;
-};
-
-export const getServerSideProps = withProtection(
-  async (ctx: GetServerSidePropsContext) => {
-    console.log(ctx);
-
-    return { name: 'Felipe' };
-  }
-);
+export const getServerSideProps: GetServerSideProps = withProtection();
 
 export default Page;

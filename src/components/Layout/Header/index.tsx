@@ -8,7 +8,7 @@ export const Header = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="shadow">
+    <header className="flex-grow-0 shadow">
       <Container>
         <div className="flex justify-between h-64">
           <div className="flex">
@@ -16,7 +16,7 @@ export const Header = () => {
               <img alt="" className="w-32 h-32" src="/assets/logo.svg" />
             </div>
             <div className="hidden sm:flex sm:ml-8">
-              <Option href="/">Home</Option>
+              <Option href="/dashboard">Dashboard</Option>
             </div>
           </div>
           <button
@@ -36,7 +36,7 @@ export const Header = () => {
         </div>
       </Container>
       <div className={clsx(isMenuOpen ? 'block' : 'hidden', 'sm:hidden')}>
-        <Option href="/">Home</Option>
+        <Option href="/dashboard">Dashboard</Option>
         <button
           className="w-full px-16 py-8 font-medium text-left text-gray-500 border-l-4 border-transparent text-x2 focus:outline-none"
           onClick={() => {}}
@@ -44,6 +44,6 @@ export const Header = () => {
           Sair
         </button>
       </div>
-    </nav>
+    </header>
   );
 };

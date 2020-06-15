@@ -4,7 +4,7 @@ import { getSession } from 'lib/iron';
 
 // Follow thread: https://github.com/vercel/next.js/discussions/11281
 export const withProtection = (
-  handleFn: (ctx: GetServerSidePropsContext) => Promise<object>
+  handleFn?: (ctx: GetServerSidePropsContext) => Promise<object>
 ) => async (ctx: GetServerSidePropsContext) => {
   const { req, res } = ctx;
   const session = await getSession(req);
