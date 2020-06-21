@@ -14,5 +14,4 @@ const negativeMargins = Object.keys(spacing).reduce((acc, key) => {
 module.exports = {
   ...negativeMargins,
   ...spacing,
-  auto: 'auto',
 };

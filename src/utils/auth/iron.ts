@@ -3,7 +3,7 @@ import { IncomingMessage } from 'http';
 import { MagicUserMetadata } from 'magic-sdk';
 import { NextApiRequest } from 'next';
 
-import { getTokenCookie } from 'lib/authCookies';
+import { getTokenCookie } from 'src/utils/auth';
 
 const TOKEN_SECRET = process.env.TOKEN_SECRET!;
 

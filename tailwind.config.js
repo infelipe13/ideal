@@ -1,6 +1,6 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
-const { colors, fontSize, margin, spacing } = require('./theme');
+const { colors, fontSize, margin, spacing } = require('./src/tailwind/theme');
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
@@ -19,5 +19,4 @@ module.exports = {
       spacing,
     },
   },
-  variants: {},
 };

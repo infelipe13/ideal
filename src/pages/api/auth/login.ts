@@ -1,13 +1,16 @@
 import { PrismaClient } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { setTokenCookie } from 'lib/authCookies';
-import { encryptSession } from 'lib/iron';
-import { magic } from 'lib/magic';
+import { setTokenCookie } from 'src/utils/auth';
+import { encryptSession } from 'src/utils/auth';
+import { magic } from 'src/utils/auth';
 
 const prisma = new PrismaClient();
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function handle(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   try {
     // Remove "Bearer ".
     const didToken = req.headers.authorization!.substr(7);
@@ -17,16 +20,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const token = await encryptSession(session);
     // Set token cookie.
     setTokenCookie(res, token);
-
+    // Destruct request.
     const { email } = req.body;
-    const business = await prisma.business.upsert({
-      where: { email },
-      update: { ...req.body },
+    // Upsert by e-mail.
+    await prisma.business.upsert({
       create: { ...req.body },
+      update: { ...req.body },
+      where: { email },
     });
-
-    res.status(200).send({ business });
+    // End the response.
+    res.status(200).end();
   } catch ({ message }) {
     res.status(500).send({ message });
   }
-};
+}

@@ -6,7 +6,7 @@ import Document, {
   NextScript,
 } from 'next/document';
 
-export default class extends Document {
+export default class CustomDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
 
@@ -19,7 +19,7 @@ export default class extends Document {
         <Head>
           <link href="https://rsms.me/inter/inter.css" rel="stylesheet" />
         </Head>
-        <body>
+        <body className="bg-gray-100">
           <Main />
           <NextScript />
         </body>

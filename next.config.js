@@ -10,7 +10,7 @@ const config = {
     const { splitChunks } = config.optimization;
 
     if (splitChunks) {
-      const cacheGroups = splitChunks.cacheGroups;
+      const { cacheGroups } = splitChunks;
       const preactModules = /[\\/]node_modules[\\/](preact|preact-context-provider|preact-render-to-string)[\\/]/;
 
       if (cacheGroups.framework) {
@@ -29,17 +29,16 @@ const config = {
     aliases.react = aliases['react-dom'] = 'preact/compat';
 
     if (dev && !isServer) {
-      const { entry } = config;
+      const entry = config.entry;
 
-      config.entry = () => {
-        return entry().then((entries) => {
+      config.entry = () =>
+        entry().then((entries) => {
           entries['main.js'] = ['preact/debug'].concat(
             entries['main.js'] || []
           );
 
           return entries;
         });
-      };
     }
 
     return config;

@@ -1,17 +1,21 @@
-import { Container } from 'src/components';
+import { Container, Panel } from 'src/components';
 
-type BodyProps = {
+type Props = {
   children?: React.ReactNode;
+  as: keyof React.ReactHTML;
   heading: string;
 };
 
-export const Body = ({ children, heading }: BodyProps) => {
+export const Body = ({ as, children, heading }: Props) => {
   return (
-    <main className="flex-grow bg-gray-100">
-      <Container>
-        <h1 className="my-16 font-extrabold text-x5 sm:my-32">{heading}</h1>
+    <Container as="main" className="flex-grow min-w-full">
+      <h1 className="my-16 font-extrabold text-x5 sm:my-32">{heading}</h1>
+      <Panel
+        as={as}
+        className="flex flex-col items-center min-w-full mx-auto space-y-8"
+      >
         {children}
-      </Container>
-    </main>
+      </Panel>
+    </Container>
   );
 };

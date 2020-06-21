@@ -1,19 +1,20 @@
 import { Div100Vh } from 'src/components';
 import { Body } from 'src/components/Layout/Body';
-import { Footer } from 'src/components/Layout/Footer';
 import { Header } from 'src/components/Layout/Header';
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLElement> & {
+  bodyAs?: keyof React.ReactHTML;
   children: React.ReactNode;
   heading: string;
 };
 
-export const Layout = ({ children, heading }: Props) => {
+export const Layout = ({ bodyAs = 'div', children, heading }: Props) => {
   return (
     <Div100Vh className="flex flex-col">
       <Header />
-      <Body heading={heading}>{children}</Body>
-      <Footer />
+      <Body as={bodyAs} heading={heading}>
+        {children}
+      </Body>
     </Div100Vh>
   );
 };

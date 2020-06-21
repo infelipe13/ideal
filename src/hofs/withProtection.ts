@@ -1,8 +1,8 @@
 import { GetServerSidePropsContext } from 'next';
 
-import { getSession } from 'lib/iron';
+import { getSession } from 'src/utils/auth';
 
-// Follow thread: https://github.com/vercel/next.js/discussions/11281
+// Watch discussion: https://github.com/vercel/next.js/discussions/11281
 export const withProtection = (
   handleFn?: (ctx: GetServerSidePropsContext) => Promise<object>
 ) => async (ctx: GetServerSidePropsContext) => {
@@ -10,8 +10,7 @@ export const withProtection = (
   const session = await getSession(req);
 
   if (!session) {
-    res.setHeader('location', '/');
-    res.statusCode = 302;
+    res.writeHead(302, { Location: '/' });
     res.end();
 
     return { props: {} };

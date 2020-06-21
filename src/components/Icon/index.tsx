@@ -1,4 +1,4 @@
-// Copy "path" from https://heroicons.dev
+// Copy path from https://heroicons.dev
 const icons = {
   exclamationCircle: 'M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
   menu: 'M4 6h16M4 12h16M4 18h16',
@@ -10,7 +10,9 @@ type Props = {
   name: keyof typeof icons;
 };
 
-export const Icon = ({ className, name }: Props) => {
+export const Icon = ({ className = '', name }: Props) => {
+  const path = icons[name];
+
   return (
     <svg
       className={className}
@@ -21,7 +23,7 @@ export const Icon = ({ className, name }: Props) => {
       stroke-width="2"
       viewBox="0 0 24 24"
     >
-      <path d={icons[name]} />
+      <path d={path} />
     </svg>
   );
 };

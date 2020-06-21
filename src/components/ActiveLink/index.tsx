@@ -10,27 +10,18 @@ type Props = {
 
 export const ActiveLink = ({
   activeClassName,
-  children,
   className,
   href,
+  ...rest
 }: Props) => {
   const router = useRouter();
+  const isActive = router.pathname === href;
+  const classes = clsx(isActive ? activeClassName : '', className);
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     router.push(href);
   };
 
-  return (
-    <a
-      className={clsx(
-        router.pathname === href ? activeClassName : '',
-        className
-      )}
-      href={href}
-      onClick={handleClick}
-    >
-      {children}
-    </a>
-  );
+  return <a className={classes} onClick={handleClick} {...rest} />;
 };

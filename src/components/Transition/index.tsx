@@ -24,7 +24,9 @@ const removeClasses = (node: HTMLElement, classes: string[]) => {
 };
 
 const splitClasses = (classes: string) => {
-  return classes.split(' ').filter((name) => name.length);
+  return classes.split(' ').filter(({ length }) => {
+    return length;
+  });
 };
 
 export const Transition = ({
@@ -44,32 +46,46 @@ export const Transition = ({
   const exitingClasses = splitClasses(exiting);
   const exitedClasses = splitClasses(exited);
 
+  const handleEnd = (node: HTMLElement, done: () => void) => {
+    node.addEventListener('transitionend', done, false);
+  };
+
+  const handleEnter = (node: HTMLElement) => {
+    addClasses(node, [...enterClasses, ...enteringClasses]);
+  };
+
+  const handleEntering = (node: HTMLElement) => {
+    removeClasses(node, [...enteringClasses]);
+    addClasses(node, [...enteredClasses]);
+  };
+
+  const handleEntered = (node: HTMLElement) => {
+    removeClasses(node, [...enterClasses, ...enteredClasses]);
+  };
+
+  const handleExit = (node: HTMLElement) => {
+    addClasses(node, [...exitClasses, ...exitingClasses]);
+  };
+
+  const handleExiting = (node: HTMLElement) => {
+    removeClasses(node, [...exitingClasses]);
+    addClasses(node, [...exitedClasses]);
+  };
+
+  const handleExited = (node: HTMLElement) => {
+    removeClasses(node, [...exitClasses, ...exitedClasses]);
+  };
+
   return (
     <CSSTransition
-      addEndListener={(node: HTMLElement, done: () => void) => {
-        node.addEventListener('transitionend', done, false);
-      }}
+      addEndListener={handleEnd}
       in={show}
-      onEnter={(node: HTMLElement) => {
-        addClasses(node, [...enterClasses, ...enteringClasses]);
-      }}
-      onEntering={(node: HTMLElement) => {
-        removeClasses(node, [...enteringClasses]);
-        addClasses(node, [...enteredClasses]);
-      }}
-      onEntered={(node: HTMLElement) => {
-        removeClasses(node, [...enterClasses, ...enteredClasses]);
-      }}
-      onExit={(node: HTMLElement) => {
-        addClasses(node, [...exitClasses, ...exitingClasses]);
-      }}
-      onExiting={(node: HTMLElement) => {
-        removeClasses(node, [...exitingClasses]);
-        addClasses(node, [...exitedClasses]);
-      }}
-      onExited={(node: HTMLElement) => {
-        removeClasses(node, [...exitClasses, ...exitedClasses]);
-      }}
+      onEnter={handleEnter}
+      onEntering={handleEntering}
+      onEntered={handleEntered}
+      onExit={handleExit}
+      onExiting={handleExiting}
+      onExited={handleExited}
       unmountOnExit
     >
       {children}

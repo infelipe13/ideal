@@ -1,33 +1,29 @@
-import { useEffect, useState } from 'react';
+import { createElement, useEffect, useState } from 'react';
 
 type Props = {
+  as?: keyof React.ReactHTML;
   children?: React.ReactNode;
   className?: string;
   id?: string;
   style?: React.CSSProperties;
 };
 
-const RESIZE_EVENT_NAME = 'resize';
-
-export const Div100Vh = ({ children, className, id, style }: Props) => {
+export const Div100Vh = ({ as = 'div', children, style, ...rest }: Props) => {
   const [minHeight, setMinHeight] = useState('');
+  const props = { ...rest, style: { ...style, minHeight } };
 
-  const updateMinHeight = () => {
+  const handleResize = () => {
     setMinHeight(`${window.innerHeight}px`);
   };
 
   useEffect(() => {
     setMinHeight(`${window.innerHeight}px`);
-    window.addEventListener(RESIZE_EVENT_NAME, updateMinHeight);
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      return window.removeEventListener(RESIZE_EVENT_NAME, updateMinHeight);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
-  return (
-    <div id={id} className={className} style={{ ...style, minHeight }}>
-      {children}
-    </div>
-  );
+  return createElement(as, props, children);
 };

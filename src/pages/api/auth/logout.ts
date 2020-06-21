@@ -1,10 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { removeTokenCookie } from 'lib/authCookies';
-import { getSession } from 'lib/iron';
-import { magic } from 'lib/magic';
+import { removeTokenCookie } from 'src/utils/auth';
+import { getSession } from 'src/utils/auth';
+import { magic } from 'src/utils/auth';
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function handle(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   try {
     // Unseal token cookie.
     const session = await getSession(req);
@@ -12,11 +15,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     await magic.users.logoutByIssuer(session.issuer!);
     // Remove token cookie.
     removeTokenCookie(res);
-    // Redirect to sign in.
-    res.writeHead(302, { Location: '/' });
     // Provide no response.
-    res.end();
+    res.status(200).end();
   } catch ({ message }) {
     res.status(500).send({ message });
   }
-};
+}
