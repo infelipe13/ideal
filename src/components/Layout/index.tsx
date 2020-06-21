@@ -8,11 +8,16 @@ type Props = React.HTMLAttributes<HTMLElement> & {
   heading: string;
 };
 
-export const Layout = ({ bodyAs = 'div', children, heading }: Props) => {
+export const Layout = ({
+  bodyAs = 'div',
+  children,
+  heading,
+  ...rest
+}: Props) => {
   return (
     <Div100Vh className="flex flex-col">
       <Header />
-      <Body as={bodyAs} heading={heading}>
+      <Body as={bodyAs} heading={heading} {...rest}>
         {children}
       </Body>
     </Div100Vh>
