@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import { Container, Icon } from 'src/components';
 import { Option } from 'src/components/Layout/Header/Option';
+import { authService } from 'src/services';
 
 export const Header = () => {
   const router = useRouter();
@@ -11,7 +12,7 @@ export const Header = () => {
 
   const logout = async () => {
     try {
-      await fetch('/api/auth/logout');
+      await authService.logout();
 
       router.replace('/');
     } catch (error) {

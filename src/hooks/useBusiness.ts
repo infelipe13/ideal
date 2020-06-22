@@ -8,11 +8,11 @@ type UseBusiness = {
   redirectTo?: string;
 };
 
-const fetcher = async (url: string): Promise<Business> => {
-  const response = await fetch(url);
-  const { business } = await response.json();
-  console.log(business);
-  return business;
+const fetcher = async (url: string) => {
+  const result = await fetch(url);
+  const data = await result.json();
+
+  return data;
 };
 
 export const useBusiness = ({
@@ -20,9 +20,12 @@ export const useBusiness = ({
   redirectTo,
 }: UseBusiness = {}) => {
   const router = useRouter();
-  const { data, error } = useSWR('/api/business', fetcher);
-  const business = data;
-  const finished = !!data;
+  // Rename "data" to "business". Set to "null" if "undefined".
+  const { data: business = null, error } = useSWR<Business>(
+    '/api/business',
+    fetcher
+  );
+  const finished = !!business;
   const hasBusiness = !!business;
 
   useEffect(() => {

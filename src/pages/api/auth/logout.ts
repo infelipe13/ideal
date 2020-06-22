@@ -4,7 +4,7 @@ import { removeTokenCookie } from 'src/utils/auth';
 import { getSession } from 'src/utils/auth';
 import { magic } from 'src/utils/auth';
 
-export default async function handle(
+export default async function handleReq(
   req: NextApiRequest,
   res: NextApiResponse
 ) {

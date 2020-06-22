@@ -18,10 +18,10 @@ export const ActiveLink = ({
   const isActive = router.pathname === href;
   const classes = clsx(isActive ? activeClassName : '', className);
 
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const navigate = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     router.push(href);
   };
 
-  return <a className={classes} onClick={handleClick} {...rest} />;
+  return <a className={classes} onClick={navigate} {...rest} />;
 };

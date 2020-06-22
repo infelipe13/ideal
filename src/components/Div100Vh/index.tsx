@@ -12,16 +12,16 @@ export const Div100Vh = ({ as = 'div', children, style, ...rest }: Props) => {
   const [minHeight, setMinHeight] = useState('');
   const props = { ...rest, style: { ...style, minHeight } };
 
-  const handleResize = () => {
+  const updateMinHeight = () => {
     setMinHeight(`${window.innerHeight}px`);
   };
 
   useEffect(() => {
     setMinHeight(`${window.innerHeight}px`);
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', updateMinHeight);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', updateMinHeight);
     };
   }, []);
 

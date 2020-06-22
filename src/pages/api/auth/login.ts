@@ -7,7 +7,7 @@ import { magic } from 'src/utils/auth';
 
 const prisma = new PrismaClient();
 
-export default async function handle(
+export default async function handleReq(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
