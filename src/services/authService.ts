@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { Magic } from 'magic-sdk';
 
 export const authService = {
@@ -6,13 +5,16 @@ export const authService = {
     const magic = new Magic(process.env.MAGIC_PUBLISHABLE_KEY!);
     const didToken = await magic.auth.loginWithMagicLink({ email });
 
-    await axios.post(
-      '/api/auth/login',
-      { email },
-      { headers: { Authorization: `Bearer ${didToken}` } }
-    );
+    await fetch('/api/auth/login', {
+      body: JSON.stringify({ email }),
+      headers: {
+        Authorization: `Bearer ${didToken}`,
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+    });
   },
   async logout() {
-    await axios('/api/auth/logout');
+    await fetch('/api/auth/logout');
   },
 };
