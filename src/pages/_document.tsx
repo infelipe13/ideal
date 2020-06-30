@@ -15,9 +15,23 @@ export default class CustomDocument extends Document {
 
   render() {
     return (
-      <Html>
+      <Html lang="pt">
         <Head>
-          <link href="https://rsms.me/inter/inter.css" rel="stylesheet" />
+          <meta content="Lorem ipsum dolor sit amet." name="description" />
+          <link
+            as="font"
+            crossOrigin="anonymous"
+            href="/fonts/inter-latin-400.woff2"
+            rel="preload"
+            type="font/woff2"
+          />
+          <link
+            as="font"
+            crossOrigin="anonymous"
+            href="/fonts/inter-latin-700.woff2"
+            rel="preload"
+            type="font/woff2"
+          />
         </Head>
         <body className="bg-gray-100">
           <Main />

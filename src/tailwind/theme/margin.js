@@ -5,13 +5,7 @@ const negativeMargins = Object.keys(spacing).reduce((acc, key) => {
     return acc;
   }
 
-  return {
-    ...acc,
-    [`-${key}`]: `-${spacing[key]}`,
-  };
+  return { ...acc, [`-${key}`]: `-${spacing[key]}` };
 }, {});
 
-module.exports = {
-  ...negativeMargins,
-  ...spacing,
-};
+module.exports = { ...negativeMargins, ...spacing };

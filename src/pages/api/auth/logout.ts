@@ -17,7 +17,9 @@ export default async function handleReq(
     removeTokenCookie(res);
     // Provide no response.
     res.status(200).end();
-  } catch ({ message }) {
-    res.status(500).send({ message });
+  } catch (error) {
+    // TODO: Log error.
+
+    res.status(500).json(error);
   }
 }

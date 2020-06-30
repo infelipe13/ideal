@@ -25,7 +25,7 @@ export const Input = ({
   const elId = useMemo(() => id || uid(), []);
 
   const Hint = () => {
-    return hint ? <span className="text-gray-500 text-x2">{hint}</span> : null;
+    return hint ? <span className="text-gray-700 text-x2">{hint}</span> : null;
   };
 
   const Addon = () => {

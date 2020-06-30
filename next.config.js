@@ -11,17 +11,13 @@ const config = {
 
     if (splitChunks) {
       const { cacheGroups } = splitChunks;
-      const preactModules = /[\\/]node_modules[\\/](preact|preact-context-provider|preact-render-to-string)[\\/]/;
+      const test = /[\\/]node_modules[\\/](preact|preact-context-provider|preact-render-to-string)[\\/]/;
 
       if (cacheGroups.framework) {
         cacheGroups.commons.name = 'framework';
-        cacheGroups.preact = { ...cacheGroups.framework, test: preactModules };
+        cacheGroups.preact = { ...cacheGroups.framework, test };
       } else {
-        cacheGroups.preact = {
-          chunks: 'all',
-          name: 'commons',
-          test: preactModules,
-        };
+        cacheGroups.preact = { chunks: 'all', name: 'commons', test };
       }
     }
 

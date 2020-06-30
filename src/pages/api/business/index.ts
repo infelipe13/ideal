@@ -13,7 +13,8 @@ export default async function handleReq(
     const session = await getSession(req);
 
     if (!session) {
-      res.status(200).json({ business: null });
+      res.writeHead(302, { Location: '/' });
+      res.end();
 
       return;
     }
@@ -22,7 +23,9 @@ export default async function handleReq(
     const business = await prisma.business.findOne({ where: { email } });
 
     res.status(200).json(business);
-  } catch ({ message }) {
-    res.status(500).send({ message });
+  } catch (error) {
+    // TODO: Log error.
+
+    res.status(500).json(error);
   }
 }

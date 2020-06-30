@@ -18,7 +18,7 @@ export default function Page() {
 
       router.replace('/');
     } catch (error) {
-      console.error(error);
+      // TODO: Log error.
     }
   };
 

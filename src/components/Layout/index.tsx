@@ -1,3 +1,5 @@
+import Head from 'next/head';
+
 import { Div100Vh } from 'src/components';
 import { Body } from 'src/components/Layout/Body';
 import { Header } from 'src/components/Layout/Header';
@@ -15,11 +17,16 @@ export const Layout = ({
   ...rest
 }: Props) => {
   return (
-    <Div100Vh className="flex flex-col">
-      <Header />
-      <Body as={bodyAs} heading={heading} {...rest}>
-        {children}
-      </Body>
-    </Div100Vh>
+    <>
+      <Head>
+        <title>iDeal - {heading}</title>
+      </Head>
+      <Div100Vh className="flex flex-col">
+        <Header />
+        <Body as={bodyAs} heading={heading} {...rest}>
+          {children}
+        </Body>
+      </Div100Vh>
+    </>
   );
 };

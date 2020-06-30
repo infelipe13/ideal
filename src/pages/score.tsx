@@ -3,6 +3,9 @@ import { GetServerSideProps } from 'next';
 import { Button, Input, Layout } from 'src/components';
 import { withProtection } from 'src/hofs';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+const noop = () => {};
+
 export default function Page() {
   return (
     <Layout
@@ -15,7 +18,7 @@ export default function Page() {
         label="Telefone celular"
         placeholder="(00) 9 1234-1234"
       />
-      <Button expand onClick={async () => {}}>
+      <Button expand onClick={noop}>
         Pontuar
       </Button>
     </Layout>

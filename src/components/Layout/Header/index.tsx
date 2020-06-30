@@ -40,7 +40,7 @@ export const Header = () => {
             <Option href="/score">Pontuar</Option>
           </div>
           <button
-            className="hidden py-8 font-medium text-gray-500 text-x2 sm:block focus:outline-none"
+            className="hidden py-8 font-medium text-gray-700 text-x2 sm:block focus:outline-none"
             onClick={logout}
           >
             Sair
@@ -60,7 +60,7 @@ export const Header = () => {
           Pontuar
         </Option>
         <button
-          className="w-full px-16 py-8 font-medium text-left text-gray-500 border-l-4 border-transparent text-x2 focus:outline-none"
+          className="w-full px-16 py-8 font-medium text-left text-gray-700 border-l-4 border-transparent text-x2 focus:outline-none"
           onClick={logout}
         >
           Sair

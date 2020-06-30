@@ -4,7 +4,9 @@ import { getSession } from 'src/utils/auth';
 
 // Watch discussion: https://github.com/vercel/next.js/discussions/11281
 export const withProtection = (
-  handleFn?: (ctx: GetServerSidePropsContext) => Promise<object>
+  handleFn?: (
+    ctx: GetServerSidePropsContext
+  ) => Promise<Record<string, unknown>>
 ) => async (ctx: GetServerSidePropsContext) => {
   const { req, res } = ctx;
   const session = await getSession(req);
@@ -12,6 +14,8 @@ export const withProtection = (
   if (!session) {
     res.writeHead(302, { Location: '/' });
     res.end();
+
+    // TODO: Log info.
 
     return { props: {} };
   }
