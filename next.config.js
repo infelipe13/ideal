@@ -6,7 +6,7 @@ const config = {
     MAGIC_SECRET_KEY: process.env.MAGIC_SECRET_KEY,
     TOKEN_SECRET: process.env.TOKEN_SECRET,
   },
-  webpack(config, { dev, isServer }) {
+  webpack: (config, { dev, isServer }) => {
     const { splitChunks } = config.optimization;
 
     if (splitChunks) {
@@ -16,9 +16,7 @@ const config = {
       if (cacheGroups.framework) {
         cacheGroups.commons.name = 'framework';
         cacheGroups.preact = { ...cacheGroups.framework, test };
-      } else {
-        cacheGroups.preact = { chunks: 'all', name: 'commons', test };
-      }
+      } else cacheGroups.preact = { chunks: 'all', name: 'commons', test };
     }
 
     const aliases = config.resolve.alias || (config.resolve.alias = {});

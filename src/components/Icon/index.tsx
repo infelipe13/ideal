@@ -10,20 +10,16 @@ type Props = {
   name: keyof typeof icons;
 };
 
-export function Icon({ className = '', name }: Props) {
-  const path = icons[name];
-
-  return (
-    <svg
-      className={className}
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-      viewBox="0 0 24 24"
-    >
-      <path d={path} />
-    </svg>
-  );
-}
+export const Icon = ({ className = '', name }: Props) => (
+  <svg
+    className={className}
+    fill="none"
+    stroke="currentColor"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    strokeWidth="2"
+    viewBox="0 0 24 24"
+  >
+    <path d={icons[name]} />
+  </svg>
+);

@@ -11,18 +11,12 @@ export const Header = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   const logout = async () => {
-    try {
-      await authService.logout();
+    await authService.logout();
 
-      router.replace('/');
-    } catch (error) {
-      console.error(error);
-    }
+    router.replace('/');
   };
 
-  const toggleMenu = () => {
-    setMenuOpen(!isMenuOpen);
-  };
+  const toggleMenu = () => setMenuOpen(!isMenuOpen);
 
   const menuIcon = isMenuOpen ? 'x' : 'menu';
   const smNavClasses = clsx(isMenuOpen ? 'block' : 'hidden', 'sm:hidden');

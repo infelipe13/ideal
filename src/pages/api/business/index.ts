@@ -5,10 +5,7 @@ import { getSession } from 'src/utils/auth';
 
 const prisma = new PrismaClient();
 
-export default async function handleReq(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+const handleReq = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const session = await getSession(req);
 
@@ -24,8 +21,10 @@ export default async function handleReq(
 
     res.status(200).json(business);
   } catch (error) {
-    // TODO: Log error.
-
     res.status(500).json(error);
+
+    throw error;
   }
-}
+};
+
+export default handleReq;

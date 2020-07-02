@@ -7,10 +7,7 @@ import { magic } from 'src/utils/auth';
 
 const prisma = new PrismaClient();
 
-export default async function handleReq(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+const handleReq = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     // Remove "Bearer ".
     const didToken = req.headers.authorization!.substr(7);
@@ -31,8 +28,10 @@ export default async function handleReq(
     // End the response.
     res.status(200).end();
   } catch (error) {
-    // TODO: Log error.
-
     res.status(500).json(error);
+
+    throw error;
   }
-}
+};
+
+export default handleReq;

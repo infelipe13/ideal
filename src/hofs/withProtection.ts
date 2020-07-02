@@ -15,8 +15,6 @@ export const withProtection = (
     res.writeHead(302, { Location: '/' });
     res.end();
 
-    // TODO: Log info.
-
     return { props: {} };
   }
 

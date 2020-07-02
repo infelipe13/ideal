@@ -6,7 +6,7 @@ import { withProtection } from 'src/hofs';
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = () => {};
 
-export default function Page() {
+const Page = () => {
   return (
     <Layout
       bodyAs="form"
@@ -23,6 +23,8 @@ export default function Page() {
       </Button>
     </Layout>
   );
-}
+};
 
 export const getServerSideProps: GetServerSideProps = withProtection();
+
+export default Page;

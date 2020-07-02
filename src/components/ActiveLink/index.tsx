@@ -1,27 +1,39 @@
 import clsx from 'clsx';
-import { useRouter } from 'next/router';
+import Link, { LinkProps } from 'next/link';
+import Router from 'next/router';
 
-type Props = {
-  activeClassName?: string;
-  className?: string;
-  children: React.ReactNode;
-  href: string;
-};
-
-export const ActiveLink = ({
-  activeClassName,
-  className,
-  href,
-  ...rest
-}: Props) => {
-  const router = useRouter();
-  const isActive = router.pathname === href;
-  const classes = clsx(isActive ? activeClassName : '', className);
-
-  const navigate = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    router.push(href);
+type Props = LinkProps &
+  React.AnchorHTMLAttributes<HTMLAnchorElement> & {
+    activeClassName: string;
   };
 
-  return <a className={classes} onClick={navigate} {...rest} />;
-};
+export const ActiveLink = ({
+  as,
+  activeClassName,
+  children,
+  className,
+  href,
+  passHref,
+  prefetch,
+  replace,
+  scroll,
+  shallow,
+  ...rest
+}: Props) => (
+  <Link
+    as={as}
+    href={href}
+    passHref={passHref}
+    prefetch={prefetch}
+    replace={replace}
+    scroll={scroll}
+    shallow={shallow}
+  >
+    <a
+      className={clsx(className, Router.pathname === href && activeClassName)}
+      {...rest}
+    >
+      {children}
+    </a>
+  </Link>
+);

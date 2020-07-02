@@ -7,18 +7,14 @@ import { getTokenCookie } from 'src/utils/auth';
 
 const TOKEN_SECRET = process.env.TOKEN_SECRET!;
 
-if (!TOKEN_SECRET) {
-  // TODO: Log error.
-}
-
-export async function encryptSession(session: MagicUserMetadata) {
+export const encryptSession = async (session: MagicUserMetadata) => {
   return Iron.seal(session, TOKEN_SECRET, Iron.defaults);
-}
+};
 
-export async function getSession(
+export const getSession = async (
   req: IncomingMessage | NextApiRequest
-): Promise<MagicUserMetadata> {
+): Promise<MagicUserMetadata> => {
   const tokenCookie = getTokenCookie(req);
 
   return tokenCookie && Iron.unseal(tokenCookie, TOKEN_SECRET, Iron.defaults);
-}
+};

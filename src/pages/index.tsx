@@ -6,25 +6,20 @@ import { Button, Input, Layout } from 'src/components';
 import { authService } from 'src/services';
 import { getSession } from 'src/utils/auth';
 
-export default function Page() {
+const Page = () => {
   const router = useRouter();
   const [email, setEmail] = useState('');
 
   const login = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
 
-    try {
-      await authService.login(email);
+    await authService.login(email);
 
-      router.replace('/');
-    } catch (error) {
-      // TODO: Log error.
-    }
+    router.replace('/');
   };
 
-  const updateEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const updateEmail = (e: React.ChangeEvent<HTMLInputElement>) =>
     setEmail(e.target.value);
-  };
 
   return (
     <Layout bodyAs="form" heading="Entrar" onSubmit={login}>
@@ -38,7 +33,7 @@ export default function Page() {
       <Button expand>Entrar</Button>
     </Layout>
   );
-}
+};
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession(req);
@@ -50,3 +45,5 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
   return { props: {} };
 };
+
+export default Page;

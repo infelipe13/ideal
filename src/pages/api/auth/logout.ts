@@ -4,10 +4,7 @@ import { removeTokenCookie } from 'src/utils/auth';
 import { getSession } from 'src/utils/auth';
 import { magic } from 'src/utils/auth';
 
-export default async function handleReq(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+const handleReq = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     // Unseal token cookie.
     const session = await getSession(req);
@@ -18,8 +15,10 @@ export default async function handleReq(
     // Provide no response.
     res.status(200).end();
   } catch (error) {
-    // TODO: Log error.
-
     res.status(500).json(error);
+
+    throw error;
   }
-}
+};
+
+export default handleReq;
