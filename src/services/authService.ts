@@ -1,10 +1,8 @@
 import { Magic } from 'magic-sdk';
 
-const MAGIC_PUBLISHABLE_KEY = process.env.MAGIC_PUBLISHABLE_KEY!;
-
 export const authService = {
   login: async (email: string) => {
-    const magic = new Magic(MAGIC_PUBLISHABLE_KEY);
+    const magic = new Magic(process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY!);
     const didToken = await magic.auth.loginWithMagicLink({ email });
 
     await fetch('/api/auth/login', {

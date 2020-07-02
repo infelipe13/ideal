@@ -27,10 +27,10 @@ const handleReq = async (req: NextApiRequest, res: NextApiResponse) => {
     });
     // End the response.
     res.status(200).end();
-  } catch (error) {
-    res.status(500).json(error);
+  } catch (err) {
+    res.status(500).json(err);
 
-    throw error;
+    throw err;
   }
 };
 

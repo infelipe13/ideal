@@ -22,6 +22,7 @@ export const Input = ({
   label,
   ...rest
 }: Props) => {
+  const description = error || help;
   const elId = useMemo(() => id || uid(), [id]);
 
   return (
@@ -54,9 +55,9 @@ export const Input = ({
           </div>
         )}
       </div>
-      {(error || help) && (
+      {description && (
         <p className={clsx(error && 'text-red-900', 'text-x2')}>
-          {error || help}
+          {description}
         </p>
       )}
     </div>

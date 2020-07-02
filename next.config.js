@@ -1,11 +1,6 @@
 const withPrefresh = require('@prefresh/next');
 
 const config = {
-  env: {
-    MAGIC_PUBLISHABLE_KEY: process.env.MAGIC_PUBLISHABLE_KEY,
-    MAGIC_SECRET_KEY: process.env.MAGIC_SECRET_KEY,
-    TOKEN_SECRET: process.env.TOKEN_SECRET,
-  },
   webpack: (config, { dev, isServer }) => {
     const { splitChunks } = config.optimization;
 

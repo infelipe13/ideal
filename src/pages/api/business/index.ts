@@ -20,10 +20,10 @@ const handleReq = async (req: NextApiRequest, res: NextApiResponse) => {
     const business = await prisma.business.findOne({ where: { email } });
 
     res.status(200).json(business);
-  } catch (error) {
-    res.status(500).json(error);
+  } catch (err) {
+    res.status(500).json(err);
 
-    throw error;
+    throw err;
   }
 };
 
