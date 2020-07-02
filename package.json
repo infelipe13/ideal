@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@hapi/iron": "6.0.0",
-    "@magic-sdk/admin": "1.0.0",
+    "@magic-sdk/admin": "1.2.2",
     "clsx": "1.1.0",
     "cookie": "0.4.1",
     "magic-sdk": "2.0.3",
