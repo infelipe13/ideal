@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import Link, { LinkProps } from 'next/link';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 
 type Props = LinkProps &
   React.AnchorHTMLAttributes<HTMLAnchorElement> & {
@@ -19,21 +19,25 @@ export const ActiveLink = ({
   scroll,
   shallow,
   ...rest
-}: Props) => (
-  <Link
-    as={as}
-    href={href}
-    passHref={passHref}
-    prefetch={prefetch}
-    replace={replace}
-    scroll={scroll}
-    shallow={shallow}
-  >
-    <a
-      className={clsx(className, Router.pathname === href && activeClassName)}
-      {...rest}
+}: Props) => {
+  const { pathname } = useRouter();
+
+  return (
+    <Link
+      as={as}
+      href={href}
+      passHref={passHref}
+      prefetch={prefetch}
+      replace={replace}
+      scroll={scroll}
+      shallow={shallow}
     >
-      {children}
-    </a>
-  </Link>
-);
+      <a
+        className={clsx(className, pathname === href && activeClassName)}
+        {...rest}
+      >
+        {children}
+      </a>
+    </Link>
+  );
+};
