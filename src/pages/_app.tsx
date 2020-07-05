@@ -1,5 +1,4 @@
-// import { showReportDialog } from '@sentry/browser';
-import * as Sentry from '@sentry/node';
+import * as Sentry from '@sentry/browser';
 import { AppProps } from 'next/app';
 import Router from 'next/router';
 import NProgress from 'nprogress';
@@ -9,11 +8,9 @@ import ReactDOM from 'react-dom';
 import 'nprogress/nprogress.css';
 import 'tailwind/index.css';
 
-type Props = AppProps & {
-  err?: Error & {
-    statusCode?: number;
-  };
-};
+Router.events.on('routeChangeComplete', NProgress.done);
+Router.events.on('routeChangeError', NProgress.done);
+Router.events.on('routeChangeStart', NProgress.start);
 
 const IS_CLIENT = typeof window !== 'undefined';
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
@@ -24,26 +21,22 @@ if (IS_CLIENT && !IS_PRODUCTION) {
   });
 }
 
-Router.events.on('routeChangeComplete', NProgress.done);
-Router.events.on('routeChangeError', NProgress.done);
-Router.events.on('routeChangeStart', NProgress.start);
-
 Sentry.init({
-  // beforeSend: (event) => {
-  //   if (IS_CLIENT && event.exception) {
-  //     showReportDialog({ eventId: event.event_id });
-  //   }
+  beforeSend: (event) => {
+    if (IS_CLIENT && event.exception) {
+      Sentry.showReportDialog({ eventId: event.event_id });
+    }
 
-  //   return event;
-  // },
+    return event;
+  },
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
   enabled: IS_PRODUCTION,
 });
 
-export default function CustomApp({ Component, err, pageProps }: Props) {
+export default function CustomApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Component {...pageProps} err={err} />
+      <Component {...pageProps} />
       <style global jsx>{`
         @font-face {
           font-display: swap;

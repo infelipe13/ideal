@@ -6,6 +6,7 @@
 /out
 
 .DS_Store
+.env*.local
 .pnp.js
 
 npm-debug.log*

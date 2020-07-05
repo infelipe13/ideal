@@ -32,14 +32,6 @@ const Page = () => {
         onChange={updateEmail}
       />
       <Button expand>Entrar</Button>
-      <Button
-        type="button"
-        onClick={() => {
-          throw new Error('Error!!!');
-        }}
-      >
-        Error
-      </Button>
     </Layout>
   );
 };
