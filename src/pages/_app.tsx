@@ -1,4 +1,4 @@
-import { showReportDialog } from '@sentry/browser';
+// import { showReportDialog } from '@sentry/browser';
 import * as Sentry from '@sentry/node';
 import { AppProps } from 'next/app';
 import Router from 'next/router';
@@ -29,13 +29,13 @@ Router.events.on('routeChangeError', NProgress.done);
 Router.events.on('routeChangeStart', NProgress.start);
 
 Sentry.init({
-  beforeSend: (event) => {
-    if (IS_CLIENT && event.exception) {
-      showReportDialog({ eventId: event.event_id });
-    }
+  // beforeSend: (event) => {
+  //   if (IS_CLIENT && event.exception) {
+  //     showReportDialog({ eventId: event.event_id });
+  //   }
 
-    return event;
-  },
+  //   return event;
+  // },
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
   enabled: IS_PRODUCTION,
 });
