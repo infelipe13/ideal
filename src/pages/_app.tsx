@@ -9,7 +9,11 @@ import ReactDOM from 'react-dom';
 import 'nprogress/nprogress.css';
 import 'tailwind/index.css';
 
-type Props = AppProps & { err: Error };
+type Props = AppProps & {
+  err?: Error & {
+    statusCode?: number;
+  };
+};
 
 const IS_CLIENT = typeof window !== 'undefined';
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
