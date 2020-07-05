@@ -44,10 +44,6 @@ const config = {
       };
     }
 
-    if (!isServer) {
-      config.resolve.alias['@sentry/node'] = '@sentry/browser';
-    }
-
     if (
       // Upload sourcemap during production build.
       !dev &&

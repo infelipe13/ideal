@@ -7,16 +7,20 @@ import Document, {
   NextScript,
 } from 'next/document';
 
-process.on('uncaughtException', Sentry.captureException);
-process.on('unhandledRejection', (error) => {
-  Sentry.captureException(error);
-});
+// process.on('uncaughtException', Sentry.captureException);
+// process.on('unhandledRejection', (error) => {
+//   Sentry.captureException(error);
+// });
 
 export default class CustomDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
 
     return { ...initialProps };
+  }
+
+  componentDidCatch(error: Error) {
+    Sentry.captureException(error);
   }
 
   render() {
