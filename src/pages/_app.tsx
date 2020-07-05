@@ -36,7 +36,7 @@ Sentry.init({
   // dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
   dsn:
     'https://99a218fc564d4b719818209c98fdaea6@o415322.ingest.sentry.io/5306285',
-  // enabled: IS_PRODUCTION,
+  enabled: IS_PRODUCTION,
 });
 
 export default class CustomApp extends App {

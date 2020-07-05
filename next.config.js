@@ -1,4 +1,4 @@
-const SentryWebpackPlugin = require('@sentry/webpack-plugin');
+const SentryPlugin = require('@sentry/webpack-plugin');
 const withPrefresh = require('@prefresh/next');
 const withSourceMaps = require('@zeit/next-source-maps')();
 
@@ -48,23 +48,22 @@ const config = {
     //   config.resolve.alias['@sentry/node'] = '@sentry/browser';
     // }
 
-    // if (
-    //   // // Upload sourcemap during production build.
-    //   // !dev &&
-    //   NEXT_PUBLIC_SENTRY_DSN &&
-    //   SENTRY_AUTH_TOKEN &&
-    //   SENTRY_ORG &&
-    //   SENTRY_PROJECT
-    // ) {
-    //   config.plugins.push(
-    //     new SentryWebpackPlugin({
-    //       ignore: ['node_modules'],
-    //       include: '.next',
-    //       release: buildId,
-    //       urlPrefix: '~/_next',
-    //     })
-    //   );
-    // }
+    if (
+      // // Upload sourcemap during production build.
+      !dev &&
+      NEXT_PUBLIC_SENTRY_DSN &&
+      SENTRY_AUTH_TOKEN &&
+      SENTRY_ORG &&
+      SENTRY_PROJECT
+    ) {
+      config.plugins.push(
+        new SentryPlugin({
+          include: '.next',
+          release: buildId,
+          urlPrefix: '~/_next',
+        })
+      );
+    }
 
     return config;
   },
