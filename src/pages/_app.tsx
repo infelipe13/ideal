@@ -1,4 +1,5 @@
-import * as Sentry from '@sentry/browser';
+import { showReportDialog } from '@sentry/browser';
+import * as Sentry from '@sentry/node';
 import { AppProps } from 'next/app';
 import Router from 'next/router';
 import NProgress from 'nprogress';
@@ -24,7 +25,7 @@ Router.events.on('routeChangeStart', NProgress.start);
 Sentry.init({
   beforeSend: (event) => {
     if (IS_CLIENT && event.exception) {
-      Sentry.showReportDialog({ eventId: event.event_id });
+      showReportDialog({ eventId: event.event_id });
     }
 
     return event;
