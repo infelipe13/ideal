@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/browser';
-import App, { AppContext, Container } from 'next/app';
+import App, { AppContext } from 'next/app';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import React, { ErrorInfo } from 'react';
@@ -22,49 +22,51 @@ Router.events.on('routeChangeError', NProgress.done);
 Router.events.on('routeChangeStart', NProgress.start);
 
 Sentry.init({
-  // beforeSend: (event) => {
-  //   if (IS_CLIENT) {
-  //     if (event.exception) {
-  //       Sentry.showReportDialog({ eventId: event.event_id });
-  //     }
+  beforeSend: (event) => {
+    if (IS_CLIENT) {
+      if (event.exception) {
+        Sentry.showReportDialog({ eventId: event.event_id });
+      }
 
-  //     return event;
-  //   } else {
-  //     return null;
-  //   }
-  // },
-  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-  enabled: IS_PRODUCTION,
+      return event;
+    } else {
+      return null;
+    }
+  },
+  // dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+  dsn:
+    'https://99a218fc564d4b719818209c98fdaea6@o415322.ingest.sentry.io/5306285',
+  // enabled: IS_PRODUCTION,
 });
 
 export default class CustomApp extends App {
-  static async getInitialProps({ Component, ctx }: AppContext) {
-    const pageProps = Component.getInitialProps
-      ? await Component.getInitialProps(ctx)
-      : {};
+  // static async getInitialProps({ Component, ctx }: AppContext) {
+  //   const pageProps = Component.getInitialProps
+  //     ? await Component.getInitialProps(ctx)
+  //     : {};
 
-    return { pageProps };
-  }
+  //   return { pageProps };
+  // }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    Sentry.withScope((scope) => {
-      (Object.keys(errorInfo) as Array<keyof typeof errorInfo>).forEach(
-        (key) => {
-          scope.setExtra(key, errorInfo[key]);
-        }
-      );
+  // componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+  //   Sentry.withScope((scope) => {
+  //     (Object.keys(errorInfo) as Array<keyof typeof errorInfo>).forEach(
+  //       (key) => {
+  //         scope.setExtra(key, errorInfo[key]);
+  //       }
+  //     );
 
-      Sentry.captureException(error);
-    });
+  //     Sentry.captureException(error);
+  //   });
 
-    super.componentDidCatch(error, errorInfo);
-  }
+  //   super.componentDidCatch(error, errorInfo);
+  // }
 
   render() {
     const { Component, pageProps } = this.props;
 
     return (
-      <Container>
+      <>
         <Component {...pageProps} />
         <style global jsx>{`
           @font-face {
@@ -83,7 +85,7 @@ export default class CustomApp extends App {
             src: url('/fonts/inter-latin-700.woff2') format('woff2');
           }
         `}</style>
-      </Container>
+      </>
     );
   }
 }
