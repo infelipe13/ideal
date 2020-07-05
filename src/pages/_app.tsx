@@ -9,6 +9,8 @@ import ReactDOM from 'react-dom';
 import 'nprogress/nprogress.css';
 import 'tailwind/index.css';
 
+type Props = AppProps & { err: Error };
+
 const IS_CLIENT = typeof window !== 'undefined';
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
@@ -34,10 +36,10 @@ Sentry.init({
   enabled: IS_PRODUCTION,
 });
 
-export default function CustomApp({ Component, pageProps }: AppProps) {
+export default function CustomApp({ Component, err, pageProps }: Props) {
   return (
     <>
-      <Component {...pageProps} />
+      <Component {...pageProps} err={err} />
       <style global jsx>{`
         @font-face {
           font-display: swap;
