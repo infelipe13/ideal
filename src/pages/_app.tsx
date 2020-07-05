@@ -22,17 +22,17 @@ Router.events.on('routeChangeError', NProgress.done);
 Router.events.on('routeChangeStart', NProgress.start);
 
 Sentry.init({
-  beforeSend: (event) => {
-    if (IS_CLIENT) {
-      if (event.exception) {
-        Sentry.showReportDialog({ eventId: event.event_id });
-      }
+  // beforeSend: (event) => {
+  //   if (IS_CLIENT) {
+  //     if (event.exception) {
+  //       Sentry.showReportDialog({ eventId: event.event_id });
+  //     }
 
-      return event;
-    } else {
-      return null;
-    }
-  },
+  //     return event;
+  //   } else {
+  //     return null;
+  //   }
+  // },
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
   enabled: IS_PRODUCTION,
 });
