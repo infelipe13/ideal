@@ -44,12 +44,12 @@ const config = {
       };
     }
 
-    // if (!isServer) {
-    //   config.resolve.alias['@sentry/node'] = '@sentry/browser';
-    // }
+    if (!isServer) {
+      config.resolve.alias['@sentry/node'] = '@sentry/browser';
+    }
 
     if (
-      // // Upload sourcemap during production build.
+      // Upload sourcemap during production build.
       !dev &&
       NEXT_PUBLIC_SENTRY_DSN &&
       SENTRY_AUTH_TOKEN &&

@@ -1,8 +1,9 @@
-import * as Sentry from '@sentry/browser';
-import App, { AppContext } from 'next/app';
+import { showReportDialog } from '@sentry/browser';
+import * as Sentry from '@sentry/node';
+import { AppProps } from 'next/app';
 import Router from 'next/router';
 import NProgress from 'nprogress';
-import React, { ErrorInfo } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 
 import 'nprogress/nprogress.css';
@@ -23,69 +24,37 @@ Router.events.on('routeChangeStart', NProgress.start);
 
 Sentry.init({
   beforeSend: (event) => {
-    if (IS_CLIENT) {
-      if (event.exception) {
-        Sentry.showReportDialog({ eventId: event.event_id });
-      }
-
-      return event;
-    } else {
-      return null;
+    if (IS_CLIENT && event.exception) {
+      showReportDialog({ eventId: event.event_id });
     }
+
+    return event;
   },
-  // dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-  dsn:
-    'https://99a218fc564d4b719818209c98fdaea6@o415322.ingest.sentry.io/5306285',
+  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
   enabled: IS_PRODUCTION,
 });
 
-export default class CustomApp extends App {
-  // static async getInitialProps({ Component, ctx }: AppContext) {
-  //   const pageProps = Component.getInitialProps
-  //     ? await Component.getInitialProps(ctx)
-  //     : {};
+export default function CustomApp({ Component, pageProps }: AppProps) {
+  return (
+    <>
+      <Component {...pageProps} />
+      <style global jsx>{`
+        @font-face {
+          font-display: swap;
+          font-family: 'Inter';
+          font-style: normal;
+          font-weight: 400;
+          src: url('/fonts/inter-latin-400.woff2') format('woff2');
+        }
 
-  //   return { pageProps };
-  // }
-
-  // componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-  //   Sentry.withScope((scope) => {
-  //     (Object.keys(errorInfo) as Array<keyof typeof errorInfo>).forEach(
-  //       (key) => {
-  //         scope.setExtra(key, errorInfo[key]);
-  //       }
-  //     );
-
-  //     Sentry.captureException(error);
-  //   });
-
-  //   super.componentDidCatch(error, errorInfo);
-  // }
-
-  render() {
-    const { Component, pageProps } = this.props;
-
-    return (
-      <>
-        <Component {...pageProps} />
-        <style global jsx>{`
-          @font-face {
-            font-display: swap;
-            font-family: 'Inter';
-            font-style: normal;
-            font-weight: 400;
-            src: url('/fonts/inter-latin-400.woff2') format('woff2');
-          }
-
-          @font-face {
-            font-display: swap;
-            font-family: 'Inter';
-            font-style: normal;
-            font-weight: 700;
-            src: url('/fonts/inter-latin-700.woff2') format('woff2');
-          }
-        `}</style>
-      </>
-    );
-  }
+        @font-face {
+          font-display: swap;
+          font-family: 'Inter';
+          font-style: normal;
+          font-weight: 700;
+          src: url('/fonts/inter-latin-700.woff2') format('woff2');
+        }
+      `}</style>
+    </>
+  );
 }
