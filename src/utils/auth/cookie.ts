@@ -8,7 +8,9 @@ const TOKEN_NAME = 'iDeal';
 
 const parseCookie = (req: IncomingMessage | NextApiRequest) => {
   // No need to parse cookie if req is coming from the client.
-  if ((req as NextApiRequest).cookies) return (req as NextApiRequest).cookies;
+  if ((req as NextApiRequest).cookies) {
+    return (req as NextApiRequest).cookies;
+  }
 
   const { cookie = '' } = req.headers;
 

@@ -7,18 +7,20 @@ export const withProtection = (
   handleFn?: (
     ctx: GetServerSidePropsContext
   ) => Promise<Record<string, unknown>>
-) => async (ctx: GetServerSidePropsContext) => {
-  const { req, res } = ctx;
-  const session = await getSession(req);
+) => {
+  return async (ctx: GetServerSidePropsContext) => {
+    const { req, res } = ctx;
+    const session = await getSession(req);
 
-  if (!session) {
-    res.writeHead(302, { Location: '/' });
-    res.end();
+    if (!session) {
+      res.writeHead(302, { Location: '/' });
+      res.end();
 
-    return { props: {} };
-  }
+      return { props: {} };
+    }
 
-  const props = handleFn ? await handleFn(ctx) : {};
+    const props = handleFn ? await handleFn(ctx) : {};
 
-  return { props: { ...props, session } };
+    return { props: { ...props, session } };
+  };
 };

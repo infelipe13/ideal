@@ -16,11 +16,35 @@ export const Header = () => {
     router.replace('/');
   };
 
-  const toggleMenu = () => setMenuOpen(!isMenuOpen);
+  const toggleMenu = () => {
+    setMenuOpen(!isMenuOpen);
+  };
 
   const menuIcon = isMenuOpen ? 'x' : 'menu';
   const showExit = router.pathname !== '/';
   const smNavClasses = clsx(isMenuOpen ? 'block' : 'hidden', 'sm:hidden');
+
+  const ExitButton = () => {
+    return showExit ? (
+      <button
+        className="hidden py-8 font-medium text-gray-700 text-x2 sm:block focus:outline-none"
+        onClick={logout}
+      >
+        Sair
+      </button>
+    ) : null;
+  };
+
+  const SmExitButton = () => {
+    return showExit ? (
+      <button
+        className="w-full px-16 py-8 font-medium text-left text-gray-700 border-l-4 border-transparent text-x2 focus:outline-none"
+        onClick={logout}
+      >
+        Sair
+      </button>
+    ) : null;
+  };
 
   return (
     <header className="flex-grow-0 bg-white shadow">
@@ -34,14 +58,7 @@ export const Header = () => {
             />
             <Option href="/score">Pontuar</Option>
           </div>
-          {showExit && (
-            <button
-              className="hidden py-8 font-medium text-gray-700 text-x2 sm:block focus:outline-none"
-              onClick={logout}
-            >
-              Sair
-            </button>
-          )}
+          <ExitButton />
           <div className="flex items-center sm:hidden">
             <button
               className="inline-flex items-center justify-center p-2 text-gray-700 transition duration-200 ease-in-out rounded focus:bg-gray-200 focus:outline-none"
@@ -56,14 +73,7 @@ export const Header = () => {
         <Option hideAboveSm href="/score">
           Pontuar
         </Option>
-        {showExit && (
-          <button
-            className="w-full px-16 py-8 font-medium text-left text-gray-700 border-l-4 border-transparent text-x2 focus:outline-none"
-            onClick={logout}
-          >
-            Sair
-          </button>
-        )}
+        <SmExitButton />
       </nav>
     </header>
   );

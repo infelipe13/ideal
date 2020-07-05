@@ -18,8 +18,9 @@ const Page = () => {
     router.replace('/');
   };
 
-  const updateEmail = (e: React.ChangeEvent<HTMLInputElement>) =>
+  const updateEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
+  };
 
   return (
     <Layout bodyAs="form" heading="Entrar" onSubmit={login}>
@@ -31,6 +32,14 @@ const Page = () => {
         onChange={updateEmail}
       />
       <Button expand>Entrar</Button>
+      <Button
+        type="button"
+        onClick={() => {
+          throw new Error('Error!!!');
+        }}
+      >
+        Error
+      </Button>
     </Layout>
   );
 };

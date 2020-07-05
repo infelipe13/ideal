@@ -14,5 +14,7 @@ export const authService = {
       method: 'POST',
     });
   },
-  logout: async () => await fetch('/api/auth/logout'),
+  logout: async () => {
+    await fetch('/api/auth/logout');
+  },
 };

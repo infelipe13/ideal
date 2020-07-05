@@ -12,15 +12,20 @@ type Props = {
 };
 
 const addClasses = (node: HTMLElement, classes: string[]) => {
-  if (classes.length) node.classList.add(...classes);
+  if (classes.length) {
+    node.classList.add(...classes);
+  }
 };
 
 const removeClasses = (node: HTMLElement, classes: string[]) => {
-  if (classes.length) node.classList.remove(...classes);
+  if (classes.length) {
+    node.classList.remove(...classes);
+  }
 };
 
-const splitClasses = (classes: string) =>
-  classes.split(' ').filter(({ length }) => length);
+const splitClasses = (classes: string) => {
+  return classes.split(' ').filter(({ length }) => length);
+};
 
 export const Transition = ({
   enter = '',
@@ -39,30 +44,35 @@ export const Transition = ({
   const exitingClasses = splitClasses(exiting);
   const exitedClasses = splitClasses(exited);
 
-  const handleEnd = (node: HTMLElement, done: () => void) =>
+  const handleEnd = (node: HTMLElement, done: () => void) => {
     node.addEventListener('transitionend', done, false);
+  };
 
-  const handleEnter = (node: HTMLElement) =>
+  const handleEnter = (node: HTMLElement) => {
     addClasses(node, [...enterClasses, ...enteringClasses]);
+  };
 
   const handleEntering = (node: HTMLElement) => {
     removeClasses(node, [...enteringClasses]);
     addClasses(node, [...enteredClasses]);
   };
 
-  const handleEntered = (node: HTMLElement) =>
+  const handleEntered = (node: HTMLElement) => {
     removeClasses(node, [...enterClasses, ...enteredClasses]);
+  };
 
-  const handleExit = (node: HTMLElement) =>
+  const handleExit = (node: HTMLElement) => {
     addClasses(node, [...exitClasses, ...exitingClasses]);
+  };
 
   const handleExiting = (node: HTMLElement) => {
     removeClasses(node, [...exitingClasses]);
     addClasses(node, [...exitedClasses]);
   };
 
-  const handleExited = (node: HTMLElement) =>
+  const handleExited = (node: HTMLElement) => {
     removeClasses(node, [...exitClasses, ...exitedClasses]);
+  };
 
   return (
     <CSSTransition

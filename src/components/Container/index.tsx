@@ -10,12 +10,11 @@ export const Container = ({
   children,
   className,
   ...rest
-}: Props) =>
-  createElement(
-    as,
-    {
-      ...rest,
-      className: clsx(className, 'px-16 mx-auto max-w-7xl sm:px-32'),
-    },
-    children
-  );
+}: Props) => {
+  const props = {
+    ...rest,
+    className: clsx(className, 'px-16 mx-auto max-w-7xl sm:px-32'),
+  };
+
+  return createElement(as, props, children);
+};

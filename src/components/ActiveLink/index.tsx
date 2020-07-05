@@ -21,6 +21,8 @@ export const ActiveLink = ({
   ...rest
 }: Props) => {
   const { pathname } = useRouter();
+  const isActive = pathname === href;
+  const classes = clsx(className, isActive && activeClassName);
 
   return (
     <Link
@@ -32,10 +34,7 @@ export const ActiveLink = ({
       scroll={scroll}
       shallow={shallow}
     >
-      <a
-        className={clsx(className, pathname === href && activeClassName)}
-        {...rest}
-      >
+      <a className={classes} {...rest}>
         {children}
       </a>
     </Link>

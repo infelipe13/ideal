@@ -1,19 +1,15 @@
-const defaultTheme = require('tailwindcss/defaultTheme');
+const path = require('path');
 
-const { colors, fontSize, margin, spacing } = require('./tailwind/theme');
-
-const IS_PRODUCTION = process.env.NODE_ENV === 'production';
+const { colors, fontFamily, fontSize, margin, spacing } = require(path.join(
+  __dirname,
+  'tailwind/theme'
+));
 
 module.exports = {
   plugins: [require('@tailwindcss/ui')],
-  purge: { content: ['./src/**/*.tsx'], enabled: IS_PRODUCTION },
-  theme: {
-    extend: {
-      colors,
-      fontFamily: { sans: ['Inter', ...defaultTheme.fontFamily.sans] },
-      fontSize,
-      margin,
-      spacing,
-    },
+  purge: {
+    content: ['src/**/*.tsx'],
+    enabled: process.env.NODE_ENV === 'production',
   },
+  theme: { extend: { colors, fontFamily, fontSize, margin, spacing } },
 };

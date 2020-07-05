@@ -1,7 +1,18 @@
+const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 const withPrefresh = require('@prefresh/next');
+const withSourceMaps = require('@zeit/next-source-maps')();
+
+const {
+  NEXT_PUBLIC_SENTRY_DSN,
+  SENTRY_AUTH_TOKEN,
+  SENTRY_ORG,
+  SENTRY_PROJECT,
+} = process.env;
+
+process.env.SENTRY_DSN = NEXT_PUBLIC_SENTRY_DSN;
 
 const config = {
-  webpack: (config, { dev, isServer }) => {
+  webpack: (config, { buildId, dev, isServer }) => {
     const { splitChunks } = config.optimization;
 
     if (splitChunks) {
@@ -11,7 +22,9 @@ const config = {
       if (cacheGroups.framework) {
         cacheGroups.commons.name = 'framework';
         cacheGroups.preact = { ...cacheGroups.framework, test };
-      } else cacheGroups.preact = { chunks: 'all', name: 'commons', test };
+      } else {
+        cacheGroups.preact = { chunks: 'all', name: 'commons', test };
+      }
     }
 
     const aliases = config.resolve.alias || (config.resolve.alias = {});
@@ -20,7 +33,7 @@ const config = {
     if (dev && !isServer) {
       const entry = config.entry;
 
-      config.entry = () =>
+      config.entry = () => {
         entry().then((entries) => {
           entries['main.js'] = ['preact/debug'].concat(
             entries['main.js'] || []
@@ -28,10 +41,33 @@ const config = {
 
           return entries;
         });
+      };
     }
+
+    // if (!isServer) {
+    //   config.resolve.alias['@sentry/node'] = '@sentry/browser';
+    // }
+
+    // if (
+    //   // // Upload sourcemap during production build.
+    //   // !dev &&
+    //   NEXT_PUBLIC_SENTRY_DSN &&
+    //   SENTRY_AUTH_TOKEN &&
+    //   SENTRY_ORG &&
+    //   SENTRY_PROJECT
+    // ) {
+    //   config.plugins.push(
+    //     new SentryWebpackPlugin({
+    //       ignore: ['node_modules'],
+    //       include: '.next',
+    //       release: buildId,
+    //       urlPrefix: '~/_next',
+    //     })
+    //   );
+    // }
 
     return config;
   },
 };
 
-module.exports = withPrefresh(config);
+module.exports = withSourceMaps(withPrefresh(config));

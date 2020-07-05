@@ -9,15 +9,11 @@ type Props = {
   style?: React.CSSProperties;
 };
 
-export const Panel = ({ as = 'div', children, className, ...rest }: Props) =>
-  createElement(
-    as,
-    {
-      ...rest,
-      className: clsx(
-        className,
-        'p-16 overflow-hidden rounded shadow bg-white'
-      ),
-    },
-    children
-  );
+export const Panel = ({ as = 'div', children, className, ...rest }: Props) => {
+  const props = {
+    ...rest,
+    className: clsx(className, 'p-16 overflow-hidden rounded shadow bg-white'),
+  };
+
+  return createElement(as, props, children);
+};
