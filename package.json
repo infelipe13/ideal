@@ -65,6 +65,6 @@
     "react-axe": "3.5.3",
     "react-refresh": "0.8.3",
     "tailwindcss": "1.4.6",
-    "typescript": "3.9.2"
+    "typescript": "3.9.10"
   }
 }
