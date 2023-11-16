@@ -17,7 +17,7 @@
     "@hapi/iron": "6.0.0",
     "@magic-sdk/admin": "1.2.2",
     "@sentry/browser": "^5.19.0",
-    "@sentry/webpack-plugin": "1.11.1",
+    "@sentry/webpack-plugin": "1.21.0",
     "@zeit/next-source-maps": "0.0.4-canary.1",
     "clsx": "1.1.0",
     "cookie": "0.4.1",
